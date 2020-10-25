@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+     <!--Launch the world--> 
+     <include file="$(find gazebo_ros)/launch/empty_world.launch">
+       <arg name="world_name" value="$(find ram_push)/worlds/Table.world"/>
+       <arg name="paused" value="false"/>
+       <arg name="use_sim_time" value="true"/>
+       <arg name="gui" value="true"/>
+       <arg name="recording" value="false"/>
+       <arg name="debug" value="false"/>
+     </include>
+
+     <!--Target model description--> 
+     <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ram_push)/urdf/target1.xacro'" />
+     <arg name="x" default="-0.1"/>
+     <arg name="y" default="-1.5"/>
+     <arg name="z" default="1.2"/>
+
+     <!--Spawn the Target model--> 
+     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" output="screen"
+      args="-urdf -param robot_description -model target_box -x $(arg x) -y $(arg y) -z $(arg z)" />
+</launch>
+ 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>     
+    <group ns="/ram">
+ 
+        <!--Robot model description--> 
+        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ram_push)/urdf/ram.xacro'" />
+        <arg name="x" default="0"/>
+        <arg name="y" default="0"/>
+        <arg name="z" default="0.125"/>
+        
+        <!-- Spawn the Robot model--> 
+        <node name="robotic_arm_manipulator" pkg="gazebo_ros" type="spawn_model" output="screen"
+              args="-urdf -param robot_description -model ram -x $(arg x) -y $(arg y) -z $(arg z)" />
+
+        <!-- Load the joint controller configuration-->
+ 	<rosparam file="$(find ram_push)/config/ram_control.yaml" command="load"/>
+      
+        <!-- load the controllers -->
+  	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/ram" args="joint_state_controller joint1_position_controller joint2_position_controller joint3_position_controller joint4_position_controller joint5_position_controller joint6_position_controller joint7_position_controller"/>
+
+   </group>
+</launch>
+

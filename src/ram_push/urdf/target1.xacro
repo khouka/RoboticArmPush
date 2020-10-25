@@ -1,0 +1,39 @@
+<?xml version="1.0"?> 
+<robot name="target_box" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<link name="target_box_link">
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.032619775739"/>
+      <inertia ixx="0.00117567061366" ixy="0.0" ixz="0.0" iyy="0.00117567061366" iyz="0.0" izz="5.43662711519e-05"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry>
+         <box size="0.5 0.75 0.3"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0"/>
+      <geometry>
+         <box size="0.5 0.75 0.3"/>
+      </geometry>
+    </collision>
+</link>
+
+  <gazebo reference="target_box_link">
+    <material>Gazebo/WoodPallet</material>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <static>0</static>
+  </gazebo>
+
+<!--................. Gazebo plugins....................-->
+  <gazebo>
+	<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+	    <robotNamespace>/ram</robotNamespace>
+	</plugin>
+  </gazebo>
+</robot>
